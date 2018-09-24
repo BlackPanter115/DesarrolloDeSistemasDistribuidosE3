@@ -50,7 +50,6 @@ PoligonoReg::PoligonoReg(int n) : PoligonoIrreg(n)
 {
 	num = n;
 	angulo = 360/n;
-	double x,y;
 	double anguloCentral = 0;
 
 	for (int i = 0; i < n; ++i){

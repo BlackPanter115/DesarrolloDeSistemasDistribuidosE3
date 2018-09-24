@@ -1,8 +1,9 @@
 #include "gfx.h"
 #include <unistd.h>
 #include "PoligonoIrreg.hpp"
+#include <stdlib.h>
 #include <iostream>
-#include <stdlib.h> 
+
 using namespace std;
 
 int main()
