@@ -10,6 +10,7 @@ class PoligonoIrreg{
  
 	private:
 		vector<Coordenada> vertices;
+		Coordenada CentroDelPoligono;
 		static int numVertices;
  
 	public:
@@ -19,6 +20,10 @@ class PoligonoIrreg{
 		void anadeVertice(Coordenada);
 		void imprimeVertices();
 		vector<Coordenada> getVertices();
+		void aplicarFactorYDesplazamiento(int, int);
+		void moverAlOrigen();
+		void regresarDelOrigen();
+		void rotar(float);
 };
 
 class PoligonoReg : public PoligonoIrreg 

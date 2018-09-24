@@ -46,6 +46,47 @@ vector<Coordenada> PoligonoIrreg::getVertices()
 	return vertices;
 }
 
+void PoligonoIrreg::aplicarFactorYDesplazamiento(int factor, int desplazamiento) {
+	CentroDelPoligono.guardarX(0);
+	CentroDelPoligono.guardarY(0);
+	for (int i = 0 ; i < (int)vertices.size(); i++){
+		vertices[i].guardarX((vertices[i].obtenerX() * factor) + desplazamiento);
+		vertices[i].guardarY((vertices[i].obtenerY() * factor) + desplazamiento);
+		CentroDelPoligono.guardarX(CentroDelPoligono.obtenerX() + vertices[i].obtenerX());
+		CentroDelPoligono.guardarY(CentroDelPoligono.obtenerY() + vertices[i].obtenerY());
+	}
+	CentroDelPoligono.guardarX(CentroDelPoligono.obtenerX() / vertices.size());
+	CentroDelPoligono.guardarY(CentroDelPoligono.obtenerY() / vertices.size());
+
+}
+
+void PoligonoIrreg::moverAlOrigen() {
+	for (int i = 0 ; i < (int)vertices.size(); i++){
+		vertices[i].guardarX(vertices[i].obtenerX() - CentroDelPoligono.obtenerX());
+		vertices[i].guardarY(vertices[i].obtenerY() - CentroDelPoligono.obtenerY());
+	}
+}
+
+void PoligonoIrreg::regresarDelOrigen() {
+	for (int i = 0 ; i < (int)vertices.size(); i++){
+		vertices[i].guardarX(vertices[i].obtenerX() + CentroDelPoligono.obtenerX());
+		vertices[i].guardarY(vertices[i].obtenerY() + CentroDelPoligono.obtenerY());
+	}
+}
+
+void PoligonoIrreg::rotar(float angulo) {
+	double seno = sin(angulo);
+	double coseno = cos(angulo);
+	double xAux;
+	double yAux;
+	for (int i = 0 ; i < (int)vertices.size(); i++){
+		xAux = (vertices[i].obtenerX() * coseno) - (vertices[i].obtenerY() * seno);
+		yAux = (vertices[i].obtenerY() * coseno) + (vertices[i].obtenerX() * seno);
+		vertices[i].guardarX(xAux);
+		vertices[i].guardarY(yAux);
+	}
+}
+
 PoligonoReg::PoligonoReg(int n) : PoligonoIrreg(n)
 {
 	num = n;
@@ -75,22 +116,18 @@ void PoligonoReg::obtieneArea()
 
 }
 
-void PoligonoReg::dibujar()
-{
-	srand (time(NULL));
-	int factor = rand() % 100 + 10;
-	int desplazamiento = rand() % 600 + 100;
+void PoligonoReg::dibujar(){
 	int cont = 1;
 
 	vector<Coordenada> vertices = getVertices();
 	vector<Coordenada>::iterator i = vertices.begin();
 	while(cont < num){
-		gfx_line( (i->obtenerX()*factor)+desplazamiento, (i->obtenerY()*factor)+desplazamiento, ((i+1)->obtenerX()*factor)+desplazamiento, ((i+1)->obtenerY()*factor)+desplazamiento );
+		gfx_line(i->obtenerX(), i->obtenerY(), (i+1)->obtenerX(), (i+1)->obtenerY());
 		i++;
 		cont++;
 	}
 	i = vertices.begin();
 	vector<Coordenada>::iterator j = vertices.end();
-	gfx_line( (i->obtenerX()*factor)+desplazamiento, (i->obtenerY()*factor)+desplazamiento, ((j-1)->obtenerX()*factor)+desplazamiento, ((j-1)->obtenerY()*factor)+desplazamiento );
+	gfx_line(i->obtenerX(), i->obtenerY(), (j-1)->obtenerX(), (j-1)->obtenerY());
 	gfx_flush();
 }
