@@ -1,6 +1,6 @@
 #include "gfx.h"
 #include <unistd.h>
-#include "PoligonoIrreg.hpp"
+#include "Asteroide.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -9,22 +9,30 @@ using namespace std;
 
 int main()
 {
-	srand (time(NULL));
-	int n = 20;
-	int vertices = 0;
-	vector<PoligonoReg> asteroides;
+	srand(time(NULL));				//Generador de numeros random
 
+	/*DECLARACION DE VARIABLES*/
+	int n = 20; 					//Numero de asteroides para dibujar
+	int vertices = 0;				//Numero de vertices para cada asteoride
+	vector<Asteroide> asteroides;	//Vector de tipo Asteroide
+
+
+	/*GENERACION DE NUMERO DE VERTICES PARA CADA ASTEROIDE*/
 	for(int i = 0; i<=n; i++){
 		vertices = rand() % 8 + 3;
-		PoligonoReg	p(vertices);
+		Asteroide	p(vertices);
 		asteroides.push_back(p);
 	}
 
-	int t;
-	gfx_open(800, 600, "Ejemplo Micro Animacion GFX");
+	/*CREACION DE LA VENTANA DE LA ANIMACION*/
+	gfx_open(800, 600, "Proyecto 2 - Equipo 3");
 	gfx_color(0,200,100);
 
-	vector<PoligonoReg>::iterator pol = asteroides.begin();
+
+	//Declaracion de un iterador para el vector asteorides
+	vector<Asteroide>::iterator pol = asteroides.begin();
+
+	/*GENERACION DEL FACTOR DE ESCALA Y DE DESPLAZAMIENTO PARA CADA ASTEROIDE*/
 	int cont = 0;
 	while(cont < n){
 		int factor = rand() % 100 + 10;
@@ -33,26 +41,33 @@ int main()
 		pol++;
 		cont++;
 	}
+
+	//Calculo del angulo de rotacion
 	double alfa = ((double) (rand () % 101) / 50) * M_PI;
-	for(int i = 0 ; i < 6 ; i++) {
+
+	/**DIBUJAR TODOS LOS ASTEROIDES CON ROTACION*/
+	for(int i = 0 ; i < 1000 ; i++) {
 		gfx_clear();
-		vector<PoligonoReg>::iterator pol = asteroides.begin();
+		pol = asteroides.begin();
 		cont = 0;
+
 		while(cont < n){
-			srand (time(NULL));
 			pol->dibujar();
 			pol++;
 			cont++;
 		}
+
 		for(int j = 0; j<=n; j++){
 			asteroides[j].moverAlOrigen();
 			asteroides[j].rotar(alfa*(i + 1));
 			asteroides[j].regresarDelOrigen();
 		}
 
-		for(t = 0; t < 100; t++){
-			usleep(41666); //24 por segundo
+		for(int t = 0; t < 100; t++){
+			usleep(10000);
 		}
+		
 	}
+
 	return 0;
 }
