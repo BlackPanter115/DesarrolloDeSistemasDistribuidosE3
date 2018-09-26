@@ -58,9 +58,9 @@ int main()
 		}
 
 		for(int j = 0; j<=n; j++){
-			asteroides[j].moverAlOrigen();
+			asteroides[j].trasladar(-asteroides[j].obtenerCentroDelAsteroide().obtenerX(),-asteroides[j].obtenerCentroDelAsteroide().obtenerY());
 			asteroides[j].rotar(alfa*(i + 1));
-			asteroides[j].regresarDelOrigen();
+			asteroides[j].trasladar(asteroides[j].obtenerCentroDelAsteroide().obtenerX(),asteroides[j].obtenerCentroDelAsteroide().obtenerY());
 		}
 
 		for(int t = 0; t < 100; t++){

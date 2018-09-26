@@ -55,34 +55,30 @@ vector<Coordenada> Asteroide::getVertices()
 	return vertices;
 }
 
+Coordenada Asteroide::obtenerCentroDelAsteroide() {
+	return centroDelAsteroide;
+}
+
 void Asteroide::aplicarFactorYDesplazamiento(int factor, int desplazamiento)
 {
-	CentroDelAsteroide.guardarX(0);
-	CentroDelAsteroide.guardarY(0);
+	centroDelAsteroide.guardarX(0);
+	centroDelAsteroide.guardarY(0);
 	for (int i = 0 ; i < (int)vertices.size(); i++){
 		vertices[i].guardarX((vertices[i].obtenerX() * factor) + desplazamiento);
 		vertices[i].guardarY((vertices[i].obtenerY() * factor) + desplazamiento);
-		CentroDelAsteroide.guardarX(CentroDelAsteroide.obtenerX() + vertices[i].obtenerX());
-		CentroDelAsteroide.guardarY(CentroDelAsteroide.obtenerY() + vertices[i].obtenerY());
+		centroDelAsteroide.guardarX(centroDelAsteroide.obtenerX() + vertices[i].obtenerX());
+		centroDelAsteroide.guardarY(centroDelAsteroide.obtenerY() + vertices[i].obtenerY());
 	}
-	CentroDelAsteroide.guardarX(CentroDelAsteroide.obtenerX() / vertices.size());
-	CentroDelAsteroide.guardarY(CentroDelAsteroide.obtenerY() / vertices.size());
+	centroDelAsteroide.guardarX(centroDelAsteroide.obtenerX() / vertices.size());
+	centroDelAsteroide.guardarY(centroDelAsteroide.obtenerY() / vertices.size());
 
 }
 
-void Asteroide::moverAlOrigen()
+void Asteroide::trasladar(double x, double y)
 {
 	for (int i = 0 ; i < (int)vertices.size(); i++){
-		vertices[i].guardarX(vertices[i].obtenerX() - CentroDelAsteroide.obtenerX());
-		vertices[i].guardarY(vertices[i].obtenerY() - CentroDelAsteroide.obtenerY());
-	}
-}
-
-void Asteroide::regresarDelOrigen()
-{
-	for (int i = 0 ; i < (int)vertices.size(); i++){
-		vertices[i].guardarX(vertices[i].obtenerX() + CentroDelAsteroide.obtenerX());
-		vertices[i].guardarY(vertices[i].obtenerY() + CentroDelAsteroide.obtenerY());
+		vertices[i].guardarX(vertices[i].obtenerX() + x);
+		vertices[i].guardarY(vertices[i].obtenerY() + y);
 	}
 }
 

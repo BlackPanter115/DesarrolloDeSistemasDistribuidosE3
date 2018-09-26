@@ -11,7 +11,7 @@ class Asteroide{
  
 	private:
 		vector<Coordenada> vertices;	//Vector de Coordenadas referentes a cada vertice del asteoride
-		Coordenada CentroDelAsteroide;	//Coordenada del centro del asteroide
+		Coordenada centroDelAsteroide;	//Coordenada del centro del asteroide
 		double angulo;					//Angulo entre los lados del asteoride
 		int numVertices;				//Numero de vertices del asteroide
  
@@ -21,9 +21,9 @@ class Asteroide{
 		void anadeVertice(Coordenada);
 		void imprimeVertices();
 		vector<Coordenada> getVertices();
+		Coordenada obtenerCentroDelAsteroide();
 		void aplicarFactorYDesplazamiento(int, int);
-		void moverAlOrigen();
-		void regresarDelOrigen();
+		void trasladar(double x, double y);
 		void rotar(float);
 		void dibujar();
 };
