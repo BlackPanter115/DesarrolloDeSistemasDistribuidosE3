@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#define ANCHO 800
+#define LARGO 600
+
 const double PI = acos(-1.0);
 using namespace std;
 
@@ -21,6 +24,16 @@ Asteroide::Asteroide(int n)
 		anadeVertice(Coordenada(cos((anguloCentral*PI)/180),sin((anguloCentral*PI)/180)));
 		anguloCentral = anguloCentral + angulo;
 	}
+	//Inicializar valores para la Traslacion
+	factor = rand() % 100 + 10;
+	if (factor > 80)
+		velocidad = 1;
+	else if (factor > 40)
+		velocidad = 2;
+	else
+		velocidad = 3;
+	inclinacion = rand() % 201-100;
+	direccion = rand() % 2;
 }	 
 
 /*ANADE LAS COORDENADAS DE LOS VERTICES AL VECTOR*/
@@ -59,7 +72,7 @@ Coordenada Asteroide::obtenerCentroDelAsteroide() {
 	return centroDelAsteroide;
 }
 
-void Asteroide::aplicarFactorYDesplazamiento(int factor, int desplazamiento)
+void Asteroide::aplicarFactorYDesplazamiento(int desplazamiento)
 {
 	centroDelAsteroide.guardarX(0);
 	centroDelAsteroide.guardarY(0);
@@ -105,7 +118,8 @@ void Asteroide::dibujar()
 	/*DIBUJAR LINEAS DESDE LA COORDENADA ACTUAL A LA SIGUIENTE HASTA LA PENULTIMA COORDENADA*/
 	int cont = 1;
 	while(cont < numVertices){
-		gfx_line(i->obtenerX(), i->obtenerY(), (i+1)->obtenerX(), (i+1)->obtenerY());
+		gfx_line(i->obtenerX() + centroDelAsteroide.obtenerX(), i->obtenerY() + centroDelAsteroide.obtenerY(),
+		(i+1)->obtenerX() + centroDelAsteroide.obtenerX(), (i+1)->obtenerY() + centroDelAsteroide.obtenerY());
 		i++;
 		cont++;
 	}
@@ -117,8 +131,30 @@ void Asteroide::dibujar()
 	vector<Coordenada>::iterator j = vertices.end();
 
 	//Dibujar laúltima linea del asteroide desde la coordenada de inicio a la ultima
-	gfx_line(i->obtenerX(), i->obtenerY(), (j-1)->obtenerX(), (j-1)->obtenerY());
+	gfx_line(i->obtenerX() + centroDelAsteroide.obtenerX(), i->obtenerY() + centroDelAsteroide.obtenerY(),
+	 (j-1)->obtenerX() + centroDelAsteroide.obtenerX(), (j-1)->obtenerY() + centroDelAsteroide.obtenerY());
 
 	//Aplicar los cambios en la ventana
 	gfx_flush();
+}
+
+void Asteroide::traslacion() {
+	double x, y;
+	//Choca arriba o abajo
+	if(centroDelAsteroide.obtenerY() <= 0 || centroDelAsteroide.obtenerY() >= LARGO-300)
+		inclinacion *= -1;
+	//choca con el borde izquierdo
+	if(centroDelAsteroide.obtenerX() <= 0 || centroDelAsteroide.obtenerX() >= ANCHO)
+		direccion = (direccion + 1) % 2;
+
+
+	if(direccion == 0)
+		x = -velocidad;
+	else
+		x = velocidad;
+
+	y = x * inclinacion; 
+	
+	centroDelAsteroide.guardarX(centroDelAsteroide.obtenerX() + x);
+	centroDelAsteroide.guardarY(centroDelAsteroide.obtenerY() + y);
 }

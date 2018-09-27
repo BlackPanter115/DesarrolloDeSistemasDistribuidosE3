@@ -35,9 +35,9 @@ int main()
 	/*GENERACION DEL FACTOR DE ESCALA Y DE DESPLAZAMIENTO PARA CADA ASTEROIDE*/
 	int cont = 0;
 	while(cont < n){
-		int factor = rand() % 100 + 10;
+		//int factor = rand() % 100 + 10;
 		int desplazamiento = rand() % 600 + 100;
-		pol->aplicarFactorYDesplazamiento(factor, desplazamiento);
+		pol->aplicarFactorYDesplazamiento(desplazamiento);
 		pol++;
 		cont++;
 	}
@@ -51,21 +51,23 @@ int main()
 		pol = asteroides.begin();
 		cont = 0;
 
-		while(cont < n){
+		for (pol = asteroides.begin(); pol != asteroides.end(); pol++) {
 			pol->dibujar();
-			pol++;
-			cont++;
+			pol->traslacion();
 		}
 
-		for(int j = 0; j<=n; j++){
+		/*for(int j = 0; j<=n; j++){
 			asteroides[j].trasladar(-asteroides[j].obtenerCentroDelAsteroide().obtenerX(),-asteroides[j].obtenerCentroDelAsteroide().obtenerY());
 			asteroides[j].rotar(alfa*(i + 1));
 			asteroides[j].trasladar(asteroides[j].obtenerCentroDelAsteroide().obtenerX(),asteroides[j].obtenerCentroDelAsteroide().obtenerY());
-		}
+		
+			//Traslacion
+			asteroides[j].traslacion();
+		}*/
 
-		for(int t = 0; t < 100; t++){
-			usleep(10000);
-		}
+		//for(int t = 0; t < 100; t++){
+			usleep(600000);
+		//}
 		
 	}
 
