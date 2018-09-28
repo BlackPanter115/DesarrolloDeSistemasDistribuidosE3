@@ -44,13 +44,12 @@ int main()
 
 	//Calculo del angulo de rotacion
 	double alfa = ((double) (rand () % 101) / 50) * M_PI;
-
+	gfx_clear();
 	/**DIBUJAR TODOS LOS ASTEROIDES CON ROTACION Y TRASLACION*/
 	for(int i = 0 ; i < 1000 ; i++) {
-		gfx_clear();
+		
 		pol = asteroides.begin();
 		cont = 0;
-
 		for (pol = asteroides.begin(); pol != asteroides.end(); pol++) {
 			pol->dibujar();
 			//pol->traslacion();
@@ -62,12 +61,12 @@ int main()
 			asteroides[j].trasladar(asteroides[j].obtenerCentroDelAsteroide().obtenerX(),asteroides[j].obtenerCentroDelAsteroide().obtenerY());
 		
 			//Traslacion
-			asteroides[j].traslacion();
+			//asteroides[j].traslacion();
 		}
 
-		//for(int t = 0; t < 100; t++){
-			usleep(600000);
-		//}
+		gfx_clear();    
+            usleep(50000);
+            if(gfx_event_waiting()) break;
 		
 	}
 
