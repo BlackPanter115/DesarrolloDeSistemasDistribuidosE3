@@ -13,6 +13,8 @@ class Asteroide{
 		vector<Coordenada> vertices;	//Vector de Coordenadas referentes a cada vertice del asteoride
 		Coordenada centroDelAsteroide;	//Coordenada del centro del asteroide
 		double angulo;					//Angulo entre los lados del asteoride
+		double velocidadDeGiro;			//Velocidad con la que gira el asteroide
+		double anguloOrigen;			//Angulo a partir del cual se calculan los vertices
 		int numVertices;				//Numero de vertices del asteroide
 		int factor;						//Tamaño del asteroide
 		double velocidad;				//Velocidad del asteroide
@@ -31,6 +33,7 @@ class Asteroide{
 		void rotar(float);
 		void dibujar();
 		void traslacion();
+		void rotacion();
 };
 
 #endif

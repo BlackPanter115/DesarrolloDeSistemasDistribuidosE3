@@ -34,39 +34,37 @@ int main()
 
 	/*GENERACION DEL FACTOR DE ESCALA Y DE DESPLAZAMIENTO PARA CADA ASTEROIDE*/
 	int cont = 0;
-	while(cont < n){
+	/*while(cont < n){
 		//int factor = rand() % 100 + 10;
-		int desplazamiento = rand() % 600 + 100;
-		pol->aplicarFactorYDesplazamiento(desplazamiento);
+		//int desplazamiento = rand() % 600 + 100;
+		//pol->aplicarFactorYDesplazamiento(desplazamiento);
 		pol++;
 		cont++;
-	}
+	}*/
 
 	//Calculo del angulo de rotacion
 	double alfa = ((double) (rand () % 101) / 50) * M_PI;
-	gfx_clear();
+
 	/**DIBUJAR TODOS LOS ASTEROIDES CON ROTACION Y TRASLACION*/
 	for(int i = 0 ; i < 1000 ; i++) {
-		
+		gfx_clear();
 		pol = asteroides.begin();
 		cont = 0;
+
 		for (pol = asteroides.begin(); pol != asteroides.end(); pol++) {
 			pol->dibujar();
 			//pol->traslacion();
 		}
 
 		for(int j = 0; j<=n; j++){
-			asteroides[j].trasladar(-asteroides[j].obtenerCentroDelAsteroide().obtenerX(),-asteroides[j].obtenerCentroDelAsteroide().obtenerY());
-			asteroides[j].rotar(alfa*(i + 1));
-			asteroides[j].trasladar(asteroides[j].obtenerCentroDelAsteroide().obtenerX(),asteroides[j].obtenerCentroDelAsteroide().obtenerY());
-		
+			
 			//Traslacion
-			//asteroides[j].traslacion();
+			asteroides[j].traslacion();
 		}
 
-		gfx_clear();    
-            usleep(50000);
-            if(gfx_event_waiting()) break;
+		//for(int t = 0; t < 100; t++){
+			usleep(41666);
+		//}
 		
 	}
 

@@ -26,14 +26,22 @@ Asteroide::Asteroide(int n)
 	}
 	//Inicializar valores para la Traslacion
 	factor = rand() % 100 + 10;
-	if (factor > 80)
-		velocidad = 1;
-	else if (factor > 40)
-		velocidad = 2;
-	else
-		velocidad = 3;
-	inclinacion = rand() % 201-100;
+	velocidad = 100.0 / (double)factor;
+	inclinacion = rand() % 5-2;
 	direccion = rand() % 2;
+
+	//Inicializar valores para la rotacion
+	anguloOrigen = 0;
+	if(rand()%2)
+		//Giro a la izquierda
+		velocidadDeGiro = 2;
+	else
+		//Giro a la derecha
+		velocidadDeGiro = angulo - 2;
+
+	//Colocar centro aleatoriamente dentro de la pantalla
+	centroDelAsteroide.guardarX(rand() % (ANCHO +1));
+	centroDelAsteroide.guardarY(rand() % (LARGO +1));
 }	 
 
 /*ANADE LAS COORDENADAS DE LOS VERTICES AL VECTOR*/
@@ -118,8 +126,8 @@ void Asteroide::dibujar()
 	/*DIBUJAR LINEAS DESDE LA COORDENADA ACTUAL A LA SIGUIENTE HASTA LA PENULTIMA COORDENADA*/
 	int cont = 1;
 	while(cont < numVertices){
-		gfx_line(i->obtenerX() + centroDelAsteroide.obtenerX(), i->obtenerY() + centroDelAsteroide.obtenerY(),
-		(i+1)->obtenerX() + centroDelAsteroide.obtenerX(), (i+1)->obtenerY() + centroDelAsteroide.obtenerY());
+		gfx_line(i->obtenerX()*factor + centroDelAsteroide.obtenerX(), i->obtenerY()*factor + centroDelAsteroide.obtenerY(),
+		(i+1)->obtenerX()*factor + centroDelAsteroide.obtenerX(), (i+1)->obtenerY()*factor + centroDelAsteroide.obtenerY());
 		i++;
 		cont++;
 	}
@@ -131,8 +139,8 @@ void Asteroide::dibujar()
 	vector<Coordenada>::iterator j = vertices.end();
 
 	//Dibujar laúltima linea del asteroide desde la coordenada de inicio a la ultima
-	gfx_line(i->obtenerX() + centroDelAsteroide.obtenerX(), i->obtenerY() + centroDelAsteroide.obtenerY(),
-	 (j-1)->obtenerX() + centroDelAsteroide.obtenerX(), (j-1)->obtenerY() + centroDelAsteroide.obtenerY());
+	gfx_line(i->obtenerX()*factor + centroDelAsteroide.obtenerX(), i->obtenerY()*factor + centroDelAsteroide.obtenerY(),
+	 (j-1)->obtenerX()*factor + centroDelAsteroide.obtenerX(), (j-1)->obtenerY()*factor + centroDelAsteroide.obtenerY());
 
 	//Aplicar los cambios en la ventana
 	gfx_flush();
@@ -141,11 +149,13 @@ void Asteroide::dibujar()
 void Asteroide::traslacion() {
 	double x, y;
 	//Si choca arriba o abajo cambia su inclinacion
-	if(centroDelAsteroide.obtenerY() <= 0 || centroDelAsteroide.obtenerY() >= LARGO-300)
+	if(centroDelAsteroide.obtenerY() <= 0 || centroDelAsteroide.obtenerY() >= LARGO)
 		inclinacion *= -1;
 	//Si choca con el borde izquierdo se cambia la direccion 
-	if(centroDelAsteroide.obtenerX() <= 0 || centroDelAsteroide.obtenerX() >= ANCHO)
+	if(centroDelAsteroide.obtenerX() <= 0 || centroDelAsteroide.obtenerX() >= ANCHO){
 		direccion = (direccion + 1) % 2;
+		inclinacion *= -1;
+	}
 
 	//Al ser 0 se movera a la izquierda.
 	if(direccion == 0)
@@ -157,4 +167,21 @@ void Asteroide::traslacion() {
 	
 	centroDelAsteroide.guardarX(centroDelAsteroide.obtenerX() + x);
 	centroDelAsteroide.guardarY(centroDelAsteroide.obtenerY() + y);
+	rotacion();
+}
+
+void Asteroide::rotacion(){
+	//Incrementa el angulo a partir del que se va dibujar dependiendo de su velocidad
+	anguloOrigen += velocidadDeGiro;
+	if(anguloOrigen >= 360){
+		anguloOrigen -= 360;
+	} 
+	double anguloCentral = anguloOrigen;
+	//calcular vertices con respecto al nuevo angulo central
+	for (vector<Coordenada>::iterator vertice = vertices.begin(); vertice < vertices.end(); vertice++){
+		vertice->guardarX(cos((anguloCentral*PI)/180));
+		vertice->guardarY(sin((anguloCentral*PI)/180));
+
+		anguloCentral = anguloCentral + angulo;
+	}
 }
