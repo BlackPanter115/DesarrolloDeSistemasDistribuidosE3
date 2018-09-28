@@ -53,17 +53,17 @@ int main()
 
 		for (pol = asteroides.begin(); pol != asteroides.end(); pol++) {
 			pol->dibujar();
-			pol->traslacion();
+			//pol->traslacion();
 		}
 
-		/*for(int j = 0; j<=n; j++){
+		for(int j = 0; j<=n; j++){
 			asteroides[j].trasladar(-asteroides[j].obtenerCentroDelAsteroide().obtenerX(),-asteroides[j].obtenerCentroDelAsteroide().obtenerY());
 			asteroides[j].rotar(alfa*(i + 1));
 			asteroides[j].trasladar(asteroides[j].obtenerCentroDelAsteroide().obtenerX(),asteroides[j].obtenerCentroDelAsteroide().obtenerY());
 		
 			//Traslacion
 			asteroides[j].traslacion();
-		}*/
+		}
 
 		//for(int t = 0; t < 100; t++){
 			usleep(600000);
