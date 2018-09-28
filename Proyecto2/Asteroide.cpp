@@ -140,14 +140,14 @@ void Asteroide::dibujar()
 
 void Asteroide::traslacion() {
 	double x, y;
-	//Choca arriba o abajo
+	//Si choca arriba o abajo cambia su inclinacion
 	if(centroDelAsteroide.obtenerY() <= 0 || centroDelAsteroide.obtenerY() >= LARGO-300)
 		inclinacion *= -1;
-	//choca con el borde izquierdo
+	//Si choca con el borde izquierdo se cambia la direccion 
 	if(centroDelAsteroide.obtenerX() <= 0 || centroDelAsteroide.obtenerX() >= ANCHO)
 		direccion = (direccion + 1) % 2;
 
-
+	//Al ser 0 se movera a la izquierda.
 	if(direccion == 0)
 		x = -velocidad;
 	else

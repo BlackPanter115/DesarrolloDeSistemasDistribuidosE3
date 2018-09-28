@@ -45,7 +45,7 @@ int main()
 	//Calculo del angulo de rotacion
 	double alfa = ((double) (rand () % 101) / 50) * M_PI;
 
-	/**DIBUJAR TODOS LOS ASTEROIDES CON ROTACION*/
+	/**DIBUJAR TODOS LOS ASTEROIDES CON ROTACION Y TRASLACION*/
 	for(int i = 0 ; i < 1000 ; i++) {
 		gfx_clear();
 		pol = asteroides.begin();
