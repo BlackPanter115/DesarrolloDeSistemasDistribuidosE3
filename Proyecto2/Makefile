@@ -1,5 +1,5 @@
 run: animacion
-	./animacion
+	./animacion $(n)
 animacion: gfx.o Coordenada.o Asteroide.o animacion.o
 	g++ gfx.o Coordenada.o Asteroide.o animacion.o -o animacion -lX11
 animacion.o: animacion.cpp

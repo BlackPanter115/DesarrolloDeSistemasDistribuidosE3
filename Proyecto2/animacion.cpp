@@ -7,12 +7,18 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char const *argv[])
 {
+	if (argc < 2) {
+		cout << endl << "Argumentos insuficientes, por favor escriba el comando de la siguiente manera: " << endl;
+		cout << "\t./animacion [no. de Asteriodes]" << endl;
+		cout << "\tmake n=[no de asteroides]" << endl << endl;
+		return -1;
+	}
 	srand(time(NULL));				//Generador de numeros random
 
 	/*DECLARACION DE VARIABLES*/
-	int n = 20; 					//Numero de asteroides para dibujar
+	int n = atoi(argv[1]); 					//Numero de asteroides para dibujar
 	int vertices = 0;				//Numero de vertices para cada asteoride
 	vector<Asteroide> asteroides;	//Vector de tipo Asteroide
 
@@ -33,7 +39,6 @@ int main()
 	vector<Asteroide>::iterator pol = asteroides.begin();
 
 	/*GENERACION DEL FACTOR DE ESCALA Y DE DESPLAZAMIENTO PARA CADA ASTEROIDE*/
-	int cont = 0;
 	/*while(cont < n){
 		//int factor = rand() % 100 + 10;
 		//int desplazamiento = rand() % 600 + 100;
@@ -43,13 +48,11 @@ int main()
 	}*/
 
 	//Calculo del angulo de rotacion
-	double alfa = ((double) (rand () % 101) / 50) * M_PI;
 
 	/**DIBUJAR TODOS LOS ASTEROIDES CON ROTACION Y TRASLACION*/
 	for(int i = 0 ; i < 1000 ; i++) {
 		gfx_clear();
 		pol = asteroides.begin();
-		cont = 0;
 
 		for (pol = asteroides.begin(); pol != asteroides.end(); pol++) {
 			pol->dibujar();
