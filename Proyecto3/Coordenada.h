@@ -2,8 +2,8 @@
 // Created by sonia on 14/10/18.
 //
 
-#ifndef _COORDENADA_H_
-#define _COORDENADA_H_
+#ifndef COORDENADA_H_
+#define COORDENADA_H_
 
 
 class Coordenada {

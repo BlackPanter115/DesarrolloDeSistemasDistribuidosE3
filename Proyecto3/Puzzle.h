@@ -2,8 +2,8 @@
 // Created by sonia on 14/10/18.
 //
 
-#ifndef _PUZZLE_H_
-#define _PUZZLE_H_
+#ifndef PUZZLE_H_
+#define PUZZLE_H_
 #include "Coordenada.h"
 #include <string.h>
 #include <vector>
